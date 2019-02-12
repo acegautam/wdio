@@ -4,3 +4,4 @@ node_modules
 *-lock.*
 backup
 vids
+.DS_Store
