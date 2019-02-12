@@ -1,5 +1,7 @@
 import { expect } from 'chai'
 import LoanApp from '../../pages/loanapp';
+import BorrowerApp from '../../pages/borrowerapp';
+import Login from '../../pages/login'
 
 describe(':::::::::::::::   LOaN ApPPLY PAgE    ::::::::::::::', () => {
   before(() => {
@@ -34,20 +36,43 @@ describe(':::::::::::::::   LOaN ApPPLY PAgE    ::::::::::::::', () => {
     LoanApp.downPayPct.setValue('10')
     const downPaymentAmount = LoanApp.downPayAmt.getValue()
     expect(downPaymentAmount, 'Incorrect downpayment amount').to.eq('$90,000')
+    browser.pause(2000)
   })
 
-  // it('should populate Cash Out Refi fields', () => {
-  //   browser.setDropdownItem({
-  //     ddselector: LoanApp.loanPurposeSelector,
-  //     value: 'Cash-Out Refinance'
-  //   })
-  // })
+  it('should navigate to the next page and render the next page correctly', () => {
+    LoanApp.goToBorrDetails()
+    expect(LoanApp.firstName.isDisplayed()).to.be.true
+    expect(LoanApp.lastName.isDisplayed()).to.be.true
+    expect(LoanApp.email.isDisplayed()).to.be.true
+  })
 
-  // it('should populate No Cash Out Refi fields', () => {
-  //   browser.setDropdownItem({
-  //     ddselector: LoanApp.loanPurposeSelector,
-  //     value: 'Cash-Out Refinance'
-  //   })
+  it('should save the basic borrower info (ANONYMOUS) into the system succesfully', () => {
+    // Populate borrower info
+    LoanApp.firstName.setValue('Bruce')
+    LoanApp.lastName.setValue('Wayne')
+    LoanApp.email.setValue('batman@gothamcity.com')
+
+    // Hit Save (anon: redirects to login)
+    LoanApp.saveBtn.click()
+
+    // Login using valid creds. Gets redirect to borrower portal.
+    Login.signin('acegautam1', 'Password1!')
+
+    // Hit Resume on the first card.
+    BorrowerApp.resumeApp()
+    
+    // Resumes loan application. Check for the correct page to be loaded.
+    LoanApp.firstName.waitForDisplayed()
+    expect(LoanApp.firstName.isDisplayed()).to.be.true
+
+    // Check save success notification pops up
+    expect(LoanApp.isSaveSuccessful()).to.be.true
+  })
+  
+  // it('should save the basic borrower info (LOGGED IN) into the system succesfully', () => {
+  //   LoanApp.firstName.setValue('Bruce')
+  //   LoanApp.lastName.setValue('Wayne')
+  //   LoanApp.email.setValue('batman@gothamcity.com')
   // })
 
   after(() => {

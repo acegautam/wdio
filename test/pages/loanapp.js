@@ -6,6 +6,32 @@ class LoanApp extends BasePage {
         this.loanPurpose.waitForDisplayed()
     }
 
+    goNext () {
+        this.nextBtn.click()
+    }
+
+    goToBorrDetails() {
+        this.goNext()
+        // browser.pause(1000)
+        this.goNext()
+        // browser.pause(1000)
+        this.goNext()
+    }
+
+    isSaveSuccessful() {
+        this.toastr.waitForDisplayed()
+        return this.toastr.isDisplayed()
+    }
+
+    // BUTTONS
+    get nextBtn() { return $('.next') }
+    get backBtn() { return $('.prev') }
+    get saveBtn() { return $('button=Save') }
+
+    // TOASTR
+    get toastr() { return $('.rrt-success') }
+
+    // LOAN PURPOSE
     get loanPurposeSelector() { return `#ee4c630d-1dbd-4945-9fee-07e20f008b87` }
     get loanPurpose() { return $(`#ee4c630d-1dbd-4945-9fee-07e20f008b87`) }
 
@@ -20,13 +46,10 @@ class LoanApp extends BasePage {
     get currLoanAmt() { return $(`[name="2445de56-61d7-41e7-862d-d10f11ed6803"]`) }
     get reqLoanAmt() { return $(`[name="9af064ac-ea53-465d-b6e1-b4af06d72c09"]`) }
 
-    // get loanPurpose() { return $() }
-    // get loanPurpose() { return $() }
-    // get loanPurpose() { return $() }
-    // get loanPurpose() { return $() }
-    // get loanPurpose() { return $() }
-    // get loanPurpose() { return $() }
-    // get loanPurpose() { return $() }
+    // BORR INFO
+    get firstName() { return $(`[name="949210d0-879d-41b3-b513-ffb1cd42e539"]`) }
+    get lastName() { return $(`[name="0c921ad9-caaf-46b3-9fba-ebbd8dbf22c3"]`) }
+    get email() { return $(`[name="53d3755b-ba8d-44bc-a9bd-36b21dc5c000"]`) }
     
 }
 

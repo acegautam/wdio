@@ -8,7 +8,9 @@ class Login extends BasePage {
         this.username.waitAndUpdate(username)
         this.togglebtn.click()
         this.password.setValue(password)
-        this.submit.click();
+        // Not sure why, but this is needed for successful login
+        browser.pause(2000)
+        this.submit.click()
     }
 
     get username() { return $('#account') }
