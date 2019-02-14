@@ -67,6 +67,7 @@ describe(':::::::::::::::   LOaN ApPPLY PAgE    ::::::::::::::', () => {
 
     // Check save success notification pops up
     expect(LoanApp.isSaveSuccessful()).to.be.true
+    browser.pause(5000)
   })
   
   // it('should save the basic borrower info (LOGGED IN) into the system succesfully', () => {
